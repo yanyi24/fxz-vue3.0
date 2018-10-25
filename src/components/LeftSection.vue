@@ -2,6 +2,7 @@
   <v-navigation-drawer   
     v-model="drawer"
     absolute
+    clipped
     temporary
     >
     <v-list>
@@ -48,8 +49,14 @@
 </template>
 <script>
 export default {
+  props: {
+    drawer:{ 
+      type: Boolean,
+      required: true
+    }
+  },
   data: () => ({
-    drawer: null,
+    // drawer: null,
     admins: [['Management', 'people_outline'], ['Settings', 'settings']],
     cruds: [
       ['Create', 'add'],
@@ -57,6 +64,11 @@ export default {
       ['Update', 'update'],
       ['Delete', 'delete']
     ]
-  })
+  }),
+  methods: {
+    function() {  
+      this.$emit('sendDrawer',this.drawer)
+    }
+  }
 };
 </script>

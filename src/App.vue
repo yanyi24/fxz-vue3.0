@@ -45,7 +45,7 @@
       </v-dialog>
     </v-layout>
 
-    <v-navigation-drawer v-model="drawer" absolute temporary>
+    <!-- <v-navigation-drawer v-model="drawer" absolute temporary>
       <v-list>
         <v-list-tile>
           <v-list-tile-action>
@@ -86,8 +86,10 @@
           </v-list-group>
         </v-list-group>
       </v-list>
-    </v-navigation-drawer>
-
+    </v-navigation-drawer> -->
+    <div>
+      <LeftSection  v-bind:drawer="drawer"/>
+    </div>
     <v-content>
       <router-view></router-view>
       <!-- <HelloWorld /> -->
@@ -114,25 +116,27 @@
 
 <script>
 import HelloWorld from './components/HelloWorld';
-// import LeftSection from './components/LeftSection';
+import LeftSection from './components/LeftSection';
 
 import axios from 'axios'
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    HelloWorld,
+    LeftSection
   },
   data () {
     return {
-      drawer: null,
+      drawer: false,
       signUpDialog: false,
-      admins: [['Management', 'people_outline'], ['Settings', 'settings']],
-      cruds: [
-        ['Create', 'add'],
-        ['Read', 'insert_drive_file'],
-        ['Update', 'update'],
-        ['Delete', 'delete']
-      ],
+      // admins: [['Management', 'people_outline'], ['Settings', 'settings']],
+      // cruds: [
+      //   ['Create', 'add'],
+      //   ['Read', 'insert_drive_file'],
+      //   ['Update', 'update'],
+      //   ['Delete', 'delete']
+      // ],
+
       valid: true,
       name: '',
       nameRules: [
@@ -168,6 +172,11 @@ export default {
     },
     clear () {
       this.$refs.form.reset()
+    },
+    getDrawer(drawer){
+      console.log(drawer);
+      
+      this.drawer = drawer;
     }
   }
 };
