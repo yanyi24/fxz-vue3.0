@@ -27,7 +27,28 @@
             <v-form ref="form" v-model="valid" lazy-validation>
               <v-text-field v-model="name" :rules="nameRules" :counter="10" label="Name" required></v-text-field>
               <v-text-field v-model="email" :rules="emailRules" label="E-mail" required></v-text-field>
-              <v-select v-model="select" :items="items" :rules="[v => !!v || 'Item is required']" label="Item" required></v-select>
+              <v-text-field
+              v-model="password"
+              :append-icon="show1 ? 'visibility_off' : 'visibility'"
+              :rules="[pwdRules.required, pwdRules.min]"
+              :type="show1 ? 'text' : 'password'"
+              name="input-10-1"
+              label="Your password"
+              hint="At least 8 characters"
+              counter
+              @click:append="show1 = !show1"
+            ></v-text-field>
+               <v-text-field
+              v-model="password2"
+              :append-icon="show1 ? 'visibility_off' : 'visibility'"
+              :rules="[pwdRules.required, pwdRules.min, pwdRules.pwdlMatch]"
+              :type="show1 ? 'text' : 'password'"
+              name="input-10-2"
+              label="Please enter your password again"
+              hint="At least 8 characters"
+              counter
+              @click:append="show1 = !show1"
+            ></v-text-field>
               <v-checkbox v-model="checkbox" :rules="[v => !!v || 'You must agree to continue!']" label="Do you agree?" required></v-checkbox>
 
               <v-btn :disabled="!valid" @click="submit">
@@ -39,13 +60,12 @@
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn color="blue darken-1" flat @click.native="signUpDialog = false">Close</v-btn>
-            <v-btn color="blue darken-1" flat @click.native="signUpDialog = false">Save</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
     </v-layout>
 
-    <!-- <v-navigation-drawer v-model="drawer" absolute temporary>
+    <v-navigation-drawer v-model="drawer" absolute temporary>
       <v-list>
         <v-list-tile>
           <v-list-tile-action>
@@ -86,10 +106,8 @@
           </v-list-group>
         </v-list-group>
       </v-list>
-    </v-navigation-drawer> -->
-    <div>
-      <LeftSection  v-bind:drawer="drawer"/>
-    </div>
+    </v-navigation-drawer>
+    
     <v-content>
       <router-view></router-view>
       <!-- <HelloWorld /> -->
@@ -115,27 +133,27 @@
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld';
-import LeftSection from './components/LeftSection';
+// import HelloWorld from './components/HelloWorld';
+// import LeftSection from './components/LeftSection';
 
 import axios from 'axios'
 export default {
   name: 'App',
   components: {
-    HelloWorld,
-    LeftSection
+    // HelloWorld,
+    // LeftSection
   },
   data () {
     return {
       drawer: false,
       signUpDialog: false,
-      // admins: [['Management', 'people_outline'], ['Settings', 'settings']],
-      // cruds: [
-      //   ['Create', 'add'],
-      //   ['Read', 'insert_drive_file'],
-      //   ['Update', 'update'],
-      //   ['Delete', 'delete']
-      // ],
+      admins: [['Management', 'people_outline'], ['Settings', 'settings']],
+      cruds: [
+        ['Create', 'add'],
+        ['Read', 'insert_drive_file'],
+        ['Update', 'update'],
+        ['Delete', 'delete']
+      ],
 
       valid: true,
       name: '',
@@ -155,7 +173,19 @@ export default {
         'Item 3',
         'Item 4'
       ],
-      checkbox: false
+      checkbox: false,
+        show1: false,
+        show2: true,
+        show3: false,
+        show4: false,
+        password: '',
+        password2: '',
+        pwdRules: {
+          required: value => !!value || 'Required.',
+          min: v => v.length >= 8 || 'Min 8 characters',
+          // pwdlMatch: () => ('The email and password you entered don\'t match')
+          pwdlMatch: v => v === this.password || 'The confirm password and password you entered don\'t match'
+        }
     };
   },
   methods: {
@@ -165,18 +195,14 @@ export default {
         axios.post('/api/submit', {
           name: this.name,
           email: this.email,
-          select: this.select,
+          password: this.password,
+          password2: this.password2,
           checkbox: this.checkbox
         })
       }
     },
     clear () {
       this.$refs.form.reset()
-    },
-    getDrawer(drawer){
-      console.log(drawer);
-      
-      this.drawer = drawer;
     }
   }
 };
