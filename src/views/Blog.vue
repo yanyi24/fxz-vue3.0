@@ -1,10 +1,12 @@
 <template>
-<Category></Category>
+<v-container>
+  <Category />
+</v-container>
 </template>
 <script>
-import Category from '../components/blog/Category'
+import Category from '../components/blog/Category';
 export default {
-  name: 'Category',
+  name: 'CategoryC',
   components: {
     Category
   }

@@ -1,12 +1,15 @@
 <template>
   <div>
     <v-layout row>
-      <v-flex sm-4>
+      <v-flex sm3>
         <v-card>
           <v-list>
             <li v-for="item in category" :key="item.title">
-              <v-list-tile avatar :to="/parentFileName/">
-                {{item.title}}
+              <v-list-tile avatar :to="'blog/'+item.title.toLowerCase()" >
+              <v-chip color="primary" text-color="white">
+                <v-avatar class="teal">12</v-avatar>
+                  {{item.title}}
+              </v-chip>
               </v-list-tile>
               <v-divider></v-divider>
             </li>
@@ -18,11 +21,9 @@
 
 </template>
 <script>
-import { getParentFileName } from '../../plugins/self.js';
 export default {
   data () {
     return {
-      parentFileName: getParentFileName(),
       category: [
         {
           title: 'Javascript'
@@ -35,6 +36,9 @@ export default {
         }
       ]
     };
+  },
+  methods: {
+    function () {  }
   }
 };
 </script>

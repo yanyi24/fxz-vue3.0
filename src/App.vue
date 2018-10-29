@@ -141,7 +141,7 @@ export default {
   name: 'App',
   components: {
     // HelloWorld,
-    // LeftSection
+    // LeftSection,
   },
   data () {
     return {
