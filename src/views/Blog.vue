@@ -6,7 +6,7 @@
 <script>
 import Category from '../components/blog/Category';
 export default {
-  name: 'CategoryC',
+  name: 'Category',
   components: {
     Category
   }
